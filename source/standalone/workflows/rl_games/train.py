@@ -72,6 +72,12 @@ from omni.isaac.lab_tasks.utils.wrappers.rl_games import RlGamesGpuEnv, RlGamesV
 
 @hydra_task_config(args_cli.task, "rl_games_cfg_entry_point")
 def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agent_cfg: dict):
+    '''ZCK: add agent_cfg as input parameter
+    env_cfg:    module config, ref to file direct/cartpole/cartpole_env.py ZCK
+    agent_cfg:  file config, ref to file rl_games_ppo_cfg.yaml  ZCK
+    both:       defined in agent/__init__.py
+    '''
+
     """Train with RL-Games agent."""
     # override configurations with non-hydra CLI arguments
     env_cfg.scene.num_envs = args_cli.num_envs if args_cli.num_envs is not None else env_cfg.scene.num_envs
