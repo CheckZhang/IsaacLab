@@ -75,3 +75,21 @@ Isaac Lab development initiated from the [Orbit](https://isaac-orbit.github.io/)
    doi={10.1109/LRA.2023.3270034}
 }
 ```
+
+### Available Environments:  Isaac-Velocity-Rough-H1-v0
+#### Added by ZCK
+train: 
+```
+./isaaclab.sh -p source/standalone/workflows/rsl_rl/train.py --task Isaac-Velocity-Rough-H1-v0 --headless
+```
+play:
+```
+./isaaclab.sh -p source/standalone/workflows/rsl_rl/play.py --task Isaac-Velocity-Rough-H1-v0
+```
+record play video(.mp4):
+```
+./isaaclab.sh -p source/standalone/workflows/rsl_rl/play.py --task Isaac-Velocity-Rough-H1-v0 --headless --video --video_length 200
+```
+debug: look at launch.json
+
+###

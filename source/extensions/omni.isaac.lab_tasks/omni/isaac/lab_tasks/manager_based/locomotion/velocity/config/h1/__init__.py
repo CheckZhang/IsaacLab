@@ -16,7 +16,9 @@ gym.register(
     entry_point="omni.isaac.lab.envs:ManagerBasedRLEnv",
     disable_env_checker=True,
     kwargs={
+        # env_cfg
         "env_cfg_entry_point": f"{__name__}.rough_env_cfg:H1RoughEnvCfg",
+        # agent_cfg
         "rsl_rl_cfg_entry_point": f"{agents.__name__}.rsl_rl_ppo_cfg:H1RoughPPORunnerCfg",
         "skrl_cfg_entry_point": f"{agents.__name__}:skrl_rough_ppo_cfg.yaml",
     },
