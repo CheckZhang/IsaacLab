@@ -23,6 +23,8 @@ parser.add_argument(
 )
 parser.add_argument("--num_envs", type=int, default=None, help="Number of environments to simulate.")
 parser.add_argument("--task", type=str, default=None, help="Name of the task.")
+parser.add_argument("--usd_suffix", type=str, default=None, help="specify path to assets")
+parser.add_argument("--long", type=int, default=12, help="specify path to assets")
 parser.add_argument(
     "--use_pretrained_checkpoint",
     action="store_true",

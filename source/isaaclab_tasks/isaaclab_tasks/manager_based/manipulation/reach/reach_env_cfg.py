@@ -20,6 +20,7 @@ from isaaclab.scene import InteractiveSceneCfg
 from isaaclab.utils import configclass
 from isaaclab.utils.assets import ISAAC_NUCLEUS_DIR
 from isaaclab.utils.noise import AdditiveUniformNoiseCfg as Unoise
+from isaaclab.utils import get_arg_by_name_simple
 
 import isaaclab_tasks.manager_based.manipulation.reach.mdp as mdp
 
@@ -43,7 +44,6 @@ class ReachSceneCfg(InteractiveSceneCfg):
         prim_path="{ENV_REGEX_NS}/Table",
         spawn=sim_utils.UsdFileCfg(
             usd_path=f"{ISAAC_NUCLEUS_DIR}/Props/Mounts/SeattleLabTable/table_instanceable.usd",
-            # usd_path=f"/home/check/Documents/isaac_assets/table_instanceable.usd",
         ),
         init_state=AssetBaseCfg.InitialStateCfg(pos=(0.55, 0.0, 0.0), rot=(0.70711, 0.0, 0.0, 0.70711)),
     )
@@ -73,12 +73,12 @@ class CommandsCfg:
         resampling_time_range=(4.0, 4.0),
         debug_vis=True,
         ranges=mdp.UniformPoseCommandCfg.Ranges(
-            pos_x=(0.1, 0.3),
-            pos_y=(-0.1, 0.1),
-            pos_z=(0.15, 0.3),
+            pos_x=(0.2, 0.35), # center:0.15 length: 0.1/2
+            pos_y=(-0.06, 0.06),  # center:0    length: 0.12/2  
+            pos_z=(0.24, 0.3),  # center:0.27 length: 0.6/2
             roll=(0.0, 0.0),
             pitch=MISSING,  # depends on end-effector axis
-            yaw=(-1.57, 1.57),
+            yaw=(-1.0, 1.0),
         ),
     )
 
@@ -134,7 +134,7 @@ class RewardsCfg:
     # task terms
     end_effector_position_tracking = RewTerm(
         func=mdp.position_command_error,
-        weight=-0.2,
+        weight=-0.01,
         params={"asset_cfg": SceneEntityCfg("robot", body_names=MISSING), "command_name": "ee_pose"},
     )
     end_effector_position_tracking_fine_grained = RewTerm(
@@ -144,15 +144,15 @@ class RewardsCfg:
     )
     end_effector_orientation_tracking = RewTerm(
         func=mdp.orientation_command_error,
-        weight=-0.1,
+        weight=-0.01,
         params={"asset_cfg": SceneEntityCfg("robot", body_names=MISSING), "command_name": "ee_pose"},
     )
 
     # action penalty
-    action_rate = RewTerm(func=mdp.action_rate_l2, weight=-0.0001)
+    action_rate = RewTerm(func=mdp.action_rate_l2, weight=-0.001)
     joint_vel = RewTerm(
         func=mdp.joint_vel_l2,
-        weight=-0.0001,
+        weight=-0.001,
         params={"asset_cfg": SceneEntityCfg("robot")},
     )
 
@@ -203,7 +203,7 @@ class ReachEnvCfg(ManagerBasedRLEnvCfg):
         # general settings
         self.decimation = 2
         self.sim.render_interval = self.decimation
-        self.episode_length_s = 12.0
+        self.episode_length_s = float(get_arg_by_name_simple("long", 12))
         self.viewer.eye = (3.5, 3.5, 3.5)
         # simulation settings
         self.sim.dt = 1.0 / 60.0

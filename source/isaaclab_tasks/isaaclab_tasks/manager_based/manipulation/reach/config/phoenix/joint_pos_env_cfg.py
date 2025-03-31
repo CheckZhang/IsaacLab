@@ -41,7 +41,7 @@ class PhoenixReachEnvCfg(ReachEnvCfg):
         # override command generator body
         # end-effector is along z-direction, phoenix maybe along -x
         self.commands.ee_pose.body_name = "Hand_2"
-        self.commands.ee_pose.ranges.pitch = (math.pi, math.pi)
+        self.commands.ee_pose.ranges.pitch = (math.pi/2, math.pi/2)
 
 
 @configclass

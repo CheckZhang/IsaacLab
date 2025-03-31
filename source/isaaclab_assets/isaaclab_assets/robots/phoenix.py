@@ -17,6 +17,7 @@ import isaaclab.sim as sim_utils
 from isaaclab.actuators import ImplicitActuatorCfg
 from isaaclab.assets.articulation import ArticulationCfg
 from isaaclab.utils.assets import ISAACLAB_NUCLEUS_DIR
+from isaaclab.utils import get_arg_by_name_simple
 
 ##
 # Configuration
@@ -24,7 +25,7 @@ from isaaclab.utils.assets import ISAACLAB_NUCLEUS_DIR
 
 PHOENIX_PANDA_CFG = ArticulationCfg(
     spawn=sim_utils.UsdFileCfg(
-        usd_path=f"/home/check/Documents/my_assets/phoenix3.usd",
+        usd_path=f"/home/check/Documents/my_assets/phoenix3{get_arg_by_name_simple('usd_suffix','')}.usd",
         activate_contact_sensors=False,
         rigid_props=sim_utils.RigidBodyPropertiesCfg(
             disable_gravity=False,
@@ -59,11 +60,11 @@ PHOENIX_PANDA_CFG = ArticulationCfg(
         ),
         "panda_forearm": ImplicitActuatorCfg(
             joint_names_expr=["J[5-7]"],
-            effort_limit=30.0,
+            effort_limit=70.0,
             velocity_limit=0.1,
             stiffness=400.0,
             damping=80.0,
-        )
+        ),
         # "panda_hand": ImplicitActuatorCfg(
         #     joint_names_expr=["phoenix_finger_joint.*"],
         #     effort_limit=200.0,
